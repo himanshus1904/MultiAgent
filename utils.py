@@ -19,7 +19,8 @@ def combine_results(sql_data, website_data, pdf_data):
 
 def process_text(username, combined_text):
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=5000, chunk_overlap=500)
-    api_key = os.environ["GOOGLE_API_KEY"]
+    api_key = st.secrets["GOOGLE_API_KEY"]
+    #api_key = os.environ["GOOGLE_API_KEY"]
     splits = text_splitter.split_text(combined_text)
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
     vector_store = FAISS.from_texts(splits, embeddings)
