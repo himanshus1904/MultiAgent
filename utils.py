@@ -10,6 +10,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from userId import user_data
+import streamlit as st
 
 
 def combine_results(sql_data, website_data, pdf_data):
