@@ -13,12 +13,13 @@ import google.generativeai as genai
 
 
 def register():
-
+    
+    logger = st.logger
     st.title("Build your Agent")
     new_username = st.text_input("Set your Username", key="register_username")
     new_password = st.text_input("Set your Password", type="password", key="register_password")
     user_data = load_user_data()
-    print(user_data)
+    logger.info("user data", user_data)
     agent_name = st.text_input("Agent Name")
     org_name = st.text_input("Organization Name")
     description = st.text_area("Organization Description")
@@ -29,6 +30,7 @@ def register():
     sec_key = os.getenv("HUGGINGFACE_KEY")
 
     if st.button("Submit"):
+        logger.info("New Username",new_username)
         if new_username in user_data:
             st.error("Username already exists")
         else:
