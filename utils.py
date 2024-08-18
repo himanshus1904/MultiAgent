@@ -9,6 +9,7 @@ import os, json
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import FAISS
+from userId import user_data
 
 
 def combine_results(sql_data, website_data, pdf_data):
@@ -39,14 +40,11 @@ def get_context(username, user_input):
 
 def save_user_data(user_data):
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(script_dir, 'userid.json')
-    with open('userid.json', 'w') as file:
-        json.dump(user_data, file)
+    file_path = os.path.join(script_dir, 'userId.py')
+    with open(file_path, 'w') as file:
+        file.write("user_data = ")
+        file.write(repr(user_data))
 
 
 def load_user_data():
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(script_dir, 'userid.json')
-    with open('userid.json', 'r') as file:
-        content = file.read()
-        return json.loads(content)
+    return user_data
