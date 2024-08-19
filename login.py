@@ -26,6 +26,18 @@ def login():
             st.session_state.agent_name = user_data[username]['agent_name']
             st.session_state.org_name = user_data[username]['org_name']
             st.session_state.llm = genai.GenerativeModel('gemini-1.5-pro-001')
+            if 'conversation' not in st.session_state:
+                st.session_state.conversation = []
+            if 'user_input' not in st.session_state:
+                st.session_state.user_input = ""
+            if 'clear_input' not in st.session_state:
+                st.session_state.clear_input = False
+            if 'user_details_entered' not in st.session_state:
+                st.session_state.user_details_entered = False
+            if 'user_name' not in st.session_state:
+                st.session_state.user_name = ""
+            if 'contact_detail' not in st.session_state:
+                st.session_state.contact_detail = ""
             st.session_state.page = "Chat"
         else:
             st.error("Invalid username or password")
