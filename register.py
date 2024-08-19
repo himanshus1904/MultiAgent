@@ -18,7 +18,6 @@ def register():
     new_username = st.text_input("Set your Username", key="register_username")
     new_password = st.text_input("Set your Password", type="password", key="register_password")
     user_data = load_user_data()
-    st.write(user_data)
     agent_name = st.text_input("Agent Name")
     org_name = st.text_input("Organization Name")
     description = st.text_area("Organization Description")
@@ -58,8 +57,6 @@ def register():
         combined_data = combine_results(sql_data, website_data, pdf_data)
         process_text(new_username, combined_data)
         dir_list = os.listdir(os.getcwd()) 
-        st.write("Files and directories'", dir_list)
-        st.write("All process done")
 
         # model = genai.GenerativeModel('gemini-pro')
         st.session_state.llm = genai.GenerativeModel('gemini-1.5-pro-001')
