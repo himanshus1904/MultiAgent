@@ -60,6 +60,9 @@ def register():
             # Combine results and query LLM
             combined_data = combine_results(sql_data, website_data, pdf_data)
             process_text(new_username, combined_data)
+            dir_list = os.listdir(os.getcwd()) 
+            st.write("Files and directories'", dir_list)
+            st.write("All process done")
 
             # model = genai.GenerativeModel('gemini-pro')
             st.session_state.llm = genai.GenerativeModel('gemini-1.5-pro-001')
