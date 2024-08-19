@@ -26,6 +26,9 @@ def process_text(username, combined_text):
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
     vector_store = FAISS.from_texts(splits, embeddings)
     vector_store.save_local(username)
+    st.write("Resources processed. You can now ask questions.")
+    dir_list = os.listdir(os.getcwd()) 
+    st.write("Files and directories'", dir_list)
     return "Resources processed. You can now ask questions."
 
 
