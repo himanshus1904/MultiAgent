@@ -1,1 +1,1 @@
-{"admin": {"password": "1234", "agent_name": "Himanshu", "org_name": "GreymanAI"}, "himanshu": {"password": "1234", "agent_name": "bot", "org_name": "org"}, "q": {"password": "q", "agent_name": "q", "org_name": "q"}, "a": {"password": "a", "agent_name": "a", "org_name": "a"}, "z": {"password": "z", "agent_name": "z", "org_name": "z"}, "b": {"password": "1", "agent_name": "q", "org_name": "q"}}
+{"admin": {"password": "1234", "agent_name": "Himanshu", "org_name": "GreymanAI"}}
