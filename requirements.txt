@@ -153,6 +153,7 @@ soupsieve==2.5
 SQLAlchemy==2.0.32
 starlette==0.37.2
 streamlit==1.17.0
+streamlit_extras
 sympy==1.13.1
 tenacity==8.5.0
 threadpoolctl==3.5.0

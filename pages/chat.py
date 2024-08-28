@@ -11,6 +11,7 @@ import uuid
 import json
 from dotenv import load_dotenv
 from utils import get_context, load_user_data
+from PIL import Image
 
 load_dotenv()
 
@@ -42,6 +43,7 @@ if 'contact_detail' not in st.session_state:
 
 
 def chat():
+    st.set_page_config(layout="wide", page_title="GREYMAN AI - Chat")
     if "agent_name" not in st.session_state or "org_name" not in st.session_state:
         st.error("Please fill out the Agent Information first.")
         st.stop()
@@ -57,7 +59,7 @@ def chat():
                     text-align: right;
                     float: right;
                     clear: both;
-                    width: 60%;
+                    width: 30%;
                 }
                 .assistant-message {
                     background-color: #444;
@@ -68,7 +70,7 @@ def chat():
                     text-align: left;
                     float: left;
                     clear: both;
-                    width: 60%;
+                    width: 30%;
                 }
                 .fixed-bottom {
                     background-color: #222;
@@ -78,17 +80,67 @@ def chat():
                     bottom: 0;
                     width: 100%;
                 }
+                .top-band {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 10px;
+                    background-color: #6800b5;
+                    z-index: 999;
+                }
+                .centered-title {
+                    text-align: center;
+                    padding-top: 60px;
+                    padding-bottom: 30px;
+                    font-size: 3em;
+                }
+                .form-container {
+                    max-width: 600px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                }
+                .custom-button {
+                    width: 80%;
+                    height: 50px;
+                    margin: 10px auto;
+                    border-radius: 5px;
+                    font-size: 1.2em;
+                    font-weight: bold;
+                    color: white;
+                    display: block;
+                }
+                .register-button {
+                    background-color: #4CAF50;
+                }
+                .stTextInput > div > div > input, .stTextArea > div > div > textarea {
+                    width: 100%;
+                }
                 </style>
                 """, unsafe_allow_html=True)
 
-    st.title("Customer Support Page")
+    # Create three columns
+    left_col, center_col, right_col = st.columns([1, 2, 1])
+
+    # Left column: Logo
+    with left_col:
+        logo = Image.open("logo.jpg")
+        st.image(logo, width=200)
+
+    # Center column: Title and login form
+    with center_col:
+        # Centered title
+        st.markdown('<h1 class="centered-title">GREYMAN AI</h1>', unsafe_allow_html=True)
+
+    st.markdown('<h2 style="text-align: center; margin-bottom: 20px;">Customer Support page</h2>', unsafe_allow_html=True)
     if not st.session_state.user_details_entered:
         st.session_state.user_name = st.text_input("Please enter your name:", key="user_name_input")
         st.session_state.contact_detail = st.text_input("Please enter your contact detail:", key="contact_detail_input")
         if st.button("Submit"):
             if st.session_state.user_name and st.session_state.contact_detail:
                 st.session_state.user_details_entered = True
-                st.experimental_rerun()
             else:
                 st.warning("Please fill in both fields before submitting.")
     else:
@@ -124,6 +176,7 @@ def chat():
 
                     # Ensure that st.session_state.llm is correctly initialized and has an invoke method
                     try:
+                        print("Going into response")
                         response = st.session_state.llm.generate_content([formatted_prompt])
                         if ("I am not aware of the answer at this moment and will raise a ticket for the admin to "
                             "review.") in response.text:
@@ -134,21 +187,20 @@ def chat():
                                 "phone_number": st.session_state.contact_detail
                             }
                             try:
-                                with open('tickets.json', 'r') as file:
+                                with open('../tickets.json', 'r') as file:
                                     tickets = json.load(file)
                             except (FileNotFoundError, json.JSONDecodeError):
                                 tickets = []
                             tickets.append(ticket)
 
-                            with open('tickets.json', 'w') as file:
+                            with open('../tickets.json', 'w') as file:
                                 json.dump(tickets, file, indent=4)
                         # response = st.session_state.llm.invoke(formatted_prompt, max_length=1000, temperature=0.7)
                         st.session_state.conversation.append(("User", user_input))
                         st.session_state.conversation.append(("Agent", response.text))
-
-                        # Set flag to clear the user input field
                         st.session_state.clear_input = True
-                        st.experimental_rerun()
+                        st.rerun()
+                        # Set flag to clear the user input field
 
                     except Exception as e:
                         st.error(f"Error generating response: {e}")

@@ -6,9 +6,12 @@ __maintainer__ = "Himanshu Sharma"
 __status__ = "Development"
 
 import os, json
+
+from dotenv import load_dotenv
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import FAISS
+load_dotenv()
 
 
 def combine_results(sql_data, website_data, pdf_data):
@@ -18,7 +21,7 @@ def combine_results(sql_data, website_data, pdf_data):
 
 def process_text(username, combined_text):
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=5000, chunk_overlap=500)
-    api_key = os.environ["GOOGLE_API_KEY"]
+    # api_key = os.environ["GOOGLE_API_KEY"]
     splits = text_splitter.split_text(combined_text)
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
     vector_store = FAISS.from_texts(splits, embeddings)
@@ -27,6 +30,7 @@ def process_text(username, combined_text):
 
 
 def get_context(username, user_input):
+    api_key = os.environ["GOOGLE_API_KEY"]
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
     new_db = FAISS.load_local(folder_path=username, embeddings=embeddings, allow_dangerous_deserialization=True)
     docs = new_db.similarity_search(user_input)
@@ -47,6 +51,13 @@ def save_user_data(user_data):
 def load_user_data():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     file_path = os.path.join(script_dir, 'userid.json')
-    with open(file_path, 'r') as file:
+    with open('userId.json', 'r') as file:
         content = file.read()
         return json.loads(content)
+
+
+if __name__ == '__main__':
+    print(process_text('a',"hello this is me"))
+    # print(get_context('z', "What is GreymanAI"))
+
+

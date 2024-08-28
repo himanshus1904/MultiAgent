@@ -1,0 +1,6 @@
+[theme]
+primaryColor = "#6200EA"  # Purple (matches the logo and buttons)
+backgroundColor = "#F8F8F8"  # Light gray (background color)
+secondaryBackgroundColor = "#FFFFFF"  # White (for sidebar or secondary elements)
+textColor = "#333333"  # Dark gray (text color)
+font = "sans serif"  # Similar to the font style on the website
