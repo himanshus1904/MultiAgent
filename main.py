@@ -68,10 +68,8 @@ def main():
             with st.form(key="selection_form"):
                 st.markdown('<h2 style="text-align: center; margin-bottom: 20px;">Welcome</h2>', unsafe_allow_html=True)
 
-                login_clicked = st.form_submit_button("LOGIN", use_container_width=True,
-                                                      help="Click to log in to your account")
-                register_clicked = st.form_submit_button("REGISTER", use_container_width=True,
-                                                         help="Click to create a new account")
+                login_clicked = st.form_submit_button("LOGIN", use_container_width=True,help="Click to log in to your account")
+                register_clicked = st.form_submit_button("REGISTER", use_container_width=True,help="Click to create a new account")
 
             st.markdown('</div>', unsafe_allow_html=True)
 
