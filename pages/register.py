@@ -1,7 +1,7 @@
 import streamlit as st
 from agents import SQLAgent, WebsiteAgent, PDFAgent
 from utils import combine_results, process_text, load_user_data, save_user_data
-import os
+import os, time
 import google.generativeai as genai
 from PIL import Image
 
@@ -152,7 +152,9 @@ def register():
                     process_text(st.session_state.new_username, combined_data)
 
                     st.session_state.llm = genai.GenerativeModel('gemini-1.5-pro-001')
+                    time.sleep(5)
                     st.success("Registration successful! Please login.")
+
                     st.switch_page("pages/login.py")
 
             st.markdown('</div>', unsafe_allow_html=True)
