@@ -43,15 +43,15 @@ def get_context(username, user_input):
 
 def save_user_data(user_data):
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(script_dir, 'userid.json')
+    file_path = os.path.join(script_dir, 'userId.json')
     with open(file_path, 'w') as file:
         json.dump(user_data, file)
 
 
 def load_user_data():
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(script_dir, 'userid.json')
-    with open('userId.json', 'r') as file:
+    file_path = os.path.join(script_dir, 'userId.json')
+    with open(file_path, 'r') as file:
         content = file.read()
         return json.loads(content)
 
